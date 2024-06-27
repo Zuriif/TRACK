@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Vehicle Type</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <div class="bg-light border-right" id="sidebar-wrapper">
+            <div class="sidebar-heading">TrackIt</div>
+            <div class="list-group list-group-flush">
+                <a href="/admin" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+                <a href="/admin/trackers" class="list-group-item list-group-item-action bg-light">Trackers</a>
+                <a href="/admin/users" class="list-group-item list-group-item-action bg-light">Users</a>
+                <a href="/admin/vehicles" class="list-group-item list-group-item-action bg-light">Vehicles</a>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper" class="container-fluid">
+            <h1 class="mt-4">Edit Vehicle Type</h1>
+            <form action="/admin/vehicles/edit" method="post">
+                <input type="hidden" name="id" th:value="${vehicleType.id}">
+                <div class="form-group">
+                    <label for="typeName">Vehicle Type</label>
+                    <input type="text" class="form-control" id="typeName" name="typeName" th:value="${vehicleType.typeName}" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Vehicle Type</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.amazonaws.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

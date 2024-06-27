@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #sidebar-wrapper {
+            min-height: 100vh;
+            border-right: 1px solid #ddd;
+        }
+        .sidebar-heading {
+            padding: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .list-group-item {
+            border: none;
+            padding: 1rem 1.25rem;
+        }
+        .list-group-item:hover {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-light border-right" id="sidebar-wrapper">
+        <div class="sidebar-heading">Admin Panel</div>
+        <div class="list-group list-group-flush">
+            <a href="/admin" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+            <a href="/admin/trackers" class="list-group-item list-group-item-action bg-light">Trackers</a>
+            <a href="/admin/users" class="list-group-item list-group-item-action bg-light">Users</a>
+        </div>
+    </div>
+</body>
+</html>

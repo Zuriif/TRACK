@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trackers</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <style>
+        #sidebar-wrapper {
+            min-height: 100vh;
+            border-right: 1px solid #ddd;
+        }
+        .sidebar-heading {
+            padding: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .list-group-item {
+            border: none;
+            padding: 1rem 1.25rem;
+        }
+        .list-group-item:hover {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <div class="bg-light border-right" id="sidebar-wrapper">
+            <div class="sidebar-heading">TrackIt</div>
+            <div class="list-group list-group-flush">
+                <a href="/admin" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+                <a href="/admin/trackers" class="list-group-item list-group-item-action bg-light">Trackers</a>
+                <a href="/admin/users" class="list-group-item list-group-item-action bg-light">Users</a>
+                <a href="/admin/vehicles" class="list-group-item list-group-item-action bg-light">Vehicles</a>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper" class="container-fluid">
+            <h1 class="mt-4">Trackers</h1>
+            <a href="/admin/trackers/add" class="btn btn-primary mb-3">Add Tracker</a>
+            <table class="table table-striped table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>User</th>
+                        <th>Vehicle Type</th>
+                        <th>Radius Limit</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="tracker : ${trackers}">
+                        <td th:text="${tracker.name}"></td>
+                        <td th:text="${tracker.status}"></td>
+                        <td th:text="${tracker.user.name}"></td>
+                        <td th:text="${tracker.vehicleType.typeName}"></td>
+                        <td th:text="${tracker.radiusLimit}"></td>
+                        <td>
+                            <a th:href="@{/admin/trackers/edit/{id}(id=${tracker.id})}" class="btn btn-warning btn-sm">Edit</a>
+                            <a th:href="@{/admin/trackers/delete/{id}(id=${tracker.id})}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this tracker?');">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- /#page-content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

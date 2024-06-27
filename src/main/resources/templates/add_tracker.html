@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Tracker</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <h1 class="mt-4">Add Tracker</h1>
+        <form action="/admin/trackers/add" method="post">
+            <div class="form-group">
+                <label for="name">Tracker Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="status">Status</label>
+                <input type="text" class="form-control" id="status" name="status" required>
+            </div>
+            <div class="form-group">
+                <label for="userId">User</label>
+                <select class="form-control" id="userId" name="userId">
+                    <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="vehicleTypeId">Vehicle Type</label>
+                <select class="form-control" id="vehicleTypeId" name="vehicleTypeId">
+                    <option th:each="vehicleType : ${vehicleTypes}" th:value="${vehicleType.id}" th:text="${vehicleType.typeName}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="radiusLimit">Radius Limit (in meters)</label>
+                <input type="number" class="form-control" id="radiusLimit" name="radiusLimit" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Tracker</button>
+        </form>
+    </div>
+</body>
+</html>

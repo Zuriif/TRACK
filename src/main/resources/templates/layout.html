@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle}">Admin Panel</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <style>
+        #map { height: 500px; width: 100%; margin-top: 20px; }
+        #sidebar-wrapper {
+            width: 250px;
+        }
+        #page-content-wrapper {
+            flex: 1;
+            padding: 20px;
+        }
+        .d-flex {
+            display: flex;
+        }
+        .sidebar-heading {
+            padding: 1rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .list-group-item {
+            border: none;
+            padding: 0.75rem 1.25rem;
+        }
+        .list-group-item:hover {
+            background-color: #f8f9fa;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <div class="d-flex" id="wrapper">
+        <div th:insert="fragments/sidebar :: sidebar"></div>
+        <div id="page-content-wrapper" class="container-fluid">
+            <div th:replace="${content}"></div>
+        </div>
+    </div>
+</body>
+</html>

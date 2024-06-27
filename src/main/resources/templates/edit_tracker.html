@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Tracker</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <style>
+        #sidebar-wrapper {
+            min-height: 100vh;
+            border-right: 1px solid #ddd;
+        }
+        .sidebar-heading {
+            padding: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .list-group-item {
+            border: none;
+            padding: 1rem 1.25rem;
+        }
+        .list-group-item:hover {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <div class="bg-light border-right" id="sidebar-wrapper">
+            <div class="sidebar-heading">TrackIt</div>
+            <div class="list-group list-group-flush">
+                <a href="/admin" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+                <a href="/admin/trackers" class="list-group-item list-group-item-action bg-light">Trackers</a>
+                <a href="/admin/users" class="list-group-item list-group-item-action bg-light">Users</a>
+                <a href="/vehicles" class="list-group-item list-group-item-action bg-light">Vehicles</a>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper" class="container-fluid">
+            <h1 class="mt-4">Edit Tracker</h1>
+            <form action="/admin/trackers/edit" method="post">
+                <input type="hidden" name="id" th:value="${tracker.id}"/>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" th:value="${tracker.name}" required>
+                </div>
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select class="form-control" id="status" name="status">
+                        <option th:selected="${tracker.status == 'encours'}" value="encours">En Cours</option>
+                        <option th:selected="${tracker.status == 'arret'}" value="arret">Arrêt</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="userId">User</label>
+                    <select class="form-control" id="userId" name="userId">
+                        <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}" th:selected="${tracker.user.id == user.id}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="vehicleTypeId">Vehicle Type</label>
+                    <select class="form-control" id="vehicleTypeId" name="vehicleTypeId">
+                        <option th:each="type : ${vehicleTypes}" th:value="${type.id}" th:text="${type.typeName}" th:selected="${tracker.vehicleType.id == type.id}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="radiusLimit">Radius Limit</label>
+                    <input type="number" class="form-control" id="radiusLimit" name="radiusLimit" th:value="${tracker.radiusLimit}" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
+        <!-- /#page-content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
