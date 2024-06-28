@@ -3,45 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${pageTitle}">Admin Panel</title>
+    <title>TrackIt</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-    <style>
-        #map { height: 500px; width: 100%; margin-top: 20px; }
-        #sidebar-wrapper {
-            width: 250px;
-        }
-        #page-content-wrapper {
-            flex: 1;
-            padding: 20px;
-        }
-        .d-flex {
-            display: flex;
-        }
-        .sidebar-heading {
-            padding: 1rem;
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-        .list-group-item {
-            border: none;
-            padding: 0.75rem 1.25rem;
-        }
-        .list-group-item:hover {
-            background-color: #f8f9fa;
-        }
-    </style>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        #wrapper {
+            display: flex;
+            align-items: stretch;
+        }
+
+        #sidebar-wrapper {
+            min-width: 250px;
+            max-width: 250px;
+        }
+
+        #page-content-wrapper {
+            flex: 1;
+        }
+
+        .toggled #sidebar-wrapper {
+            margin-left: -250px;
+        }
+
+        @media (min-width: 768px) {
+            #sidebar-wrapper {
+                margin-left: 0;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="d-flex" id="wrapper">
-        <div th:insert="fragments/sidebar :: sidebar"></div>
-        <div id="page-content-wrapper" class="container-fluid">
-            <div th:replace="${content}"></div>
+<div class="d-flex" id="wrapper">
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+        <div class="sidebar-heading">TrackIt</div>
+        <div class="list-group list-group-flush">
+            <a href="/" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+            <a href="/admin/trackers" class="list-group-item list-group-item-action bg-light">Trackers</a>
+            <a href="/admin/users" class="list-group-item list-group-item-action bg-light">Users</a>
+            <a href="/admin/vehicles" class="list-group-item list-group-item-action bg-light">Vehicles</a>
         </div>
     </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+            <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+        </nav>
+
+        <div class="container-fluid">
+            <th:block th:replace="fragments :: body"></th:block>
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+</div>
+<!-- /#wrapper -->
+
+<!-- Menu Toggle Script -->
+<script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+</script>
 </body>
 </html>

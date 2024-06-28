@@ -13,14 +13,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin/trackers")
 public class TrackerController {
 
-    @Autowired
-    private TrackerService trackerService;
+    private final TrackerService trackerService;
+    private final Userservice userService;
+    private final VehicleTypeService vehicleTypeService;
 
     @Autowired
-    private Userservice userService;
-
-    @Autowired
-    private VehicleTypeService vehicleTypeService;
+    public TrackerController(TrackerService trackerService, Userservice userService, VehicleTypeService vehicleTypeService) {
+        this.trackerService = trackerService;
+        this.userService = userService;
+        this.vehicleTypeService = vehicleTypeService;
+    }
 
     @GetMapping
     public String getTrackersPage(Model model) {

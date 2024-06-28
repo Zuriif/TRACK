@@ -27,98 +27,98 @@
     </style>
 </head>
 <body>
-    <div class="d-flex" id="wrapper">
-        <!-- Sidebar -->
-        <div class="bg-light border-right" id="sidebar-wrapper">
-            <div class="sidebar-heading">TrackIt</div>
-            <div class="list-group list-group-flush">
-                <a href="/admin" class="list-group-item list-group-item-action bg-light">Dashboard</a>
-                <a href="/admin/trackers" class="list-group-item list-group-item-action bg-light">Trackers</a>
-                <a href="/admin/users" class="list-group-item list-group-item-action bg-light">Users</a>
-                <a href="/admin/vehicles" class="list-group-item list-group-item-action bg-light">Vehicles</a>
-            </div>
-        </div>
-
-        <!-- Page Content -->
-        <div id="page-content-wrapper" class="container-fluid">
-            <h1 class="mt-4">Admin - Driver Locations</h1>
-            <table class="table table-striped table-bordered">
-                <thead class="thead-light">
-                    <tr>
-                        <th>User</th>
-                        <th>Tracker</th>
-                        <th>Status</th>
-                        <th>Last Position</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="user : ${users}">
-                        <td th:text="${user.name}"></td>
-                        <td>
-                            <ul>
-                                <li th:each="tracker : ${user.trackers}" th:text="${tracker.name}"></li>
-                            </ul>
-                        </td>
-                        <td>
-                            <ul>
-                                <li th:each="tracker : ${user.trackers}" th:text="${tracker.status}"></li>
-                            </ul>
-                        </td>
-                        <td>
-                            <ul>
-                                <li th:each="tracker : ${user.trackers}" th:text="'Lat: ' + ${tracker.latitude} + ', Lon: ' + ${tracker.longitude}"></li>
-                            </ul>
-                        </td>
-                        <td>
-                            <button class="btn btn-info" th:data-user-id="${user.id}" onclick="showLocations(this)">Show Locations</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div id="map"></div>
+<div class="d-flex" id="wrapper">
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+        <div class="sidebar-heading">TrackIt</div>
+        <div class="list-group list-group-flush">
+            <a href="/admin" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+            <a href="/admin/trackers" class="list-group-item list-group-item-action bg-light">Trackers</a>
+            <a href="/admin/users" class="list-group-item list-group-item-action bg-light">Users</a>
+            <a href="/admin/vehicles" class="list-group-item list-group-item-action bg-light">Vehicles</a>
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script>
-        const map = L.map('map').setView([34.020882, -6.841650], 13); // Initial view on Rabat
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '© OpenStreetMap'
-        }).addTo(map);
+    <!-- Page Content -->
+    <div id="page-content-wrapper" class="container-fluid">
+        <h1 class="mt-4">Admin - Driver Locations</h1>
+        <table class="table table-striped table-bordered">
+            <thead class="thead-light">
+            <tr>
+                <th>User</th>
+                <th>Tracker</th>
+                <th>Status</th>
+                <th>Last Position</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.name}"></td>
+                <td>
+                    <ul>
+                        <li th:each="tracker : ${user.trackers}" th:text="${tracker.name}"></li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li th:each="tracker : ${user.trackers}" th:text="${tracker.status}"></li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li th:each="tracker : ${user.trackers}" th:text="'Lat: ' + ${tracker.latitude} + ', Lon: ' + ${tracker.longitude}"></li>
+                    </ul>
+                </td>
+                <td>
+                    <button class="btn btn-info" th:data-user-id="${user.id}" onclick="showLocations(this)">Show Locations</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div id="map"></div>
+    </div>
+</div>
 
-        function showLocations(button) {
-            const userId = button.getAttribute('data-user-id');
-            // Replace with actual API call to fetch locations
-            fetch(`/api/locations?userId=` + userId)
-                .then(response => response.json())
-                .then(locations => {
-                    map.eachLayer((layer) => {
-                        if (layer instanceof L.Marker || layer instanceof L.Circle) {
-                            map.removeLayer(layer);
-                        }
-                    });
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    const map = L.map('map').setView([34.020882, -6.841650], 13); // Initial view on Rabat
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap'
+    }).addTo(map);
 
-                    locations.forEach(location => {
-                        const marker = L.marker([location.latitude, location.longitude]).addTo(map)
-                            .bindPopup(`User ID: ${userId}`);
+    function showLocations(button) {
+        const userId = button.getAttribute('data-user-id');
+        // Replace with actual API call to fetch locations
+        fetch(`/api/locations?userId=` + userId)
+            .then(response => response.json())
+            .then(locations => {
+                map.eachLayer((layer) => {
+                    if (layer instanceof L.Marker || layer instanceof L.Circle) {
+                        map.removeLayer(layer);
+                    }
+                });
 
-                        if (location.radiusLimit) {
-                            const circle = L.circle([location.latitude, location.longitude], {
-                                radius: location.radiusLimit,
-                                color: 'red',
-                                fillColor: '#f03',
-                                fillOpacity: 0.5
-                            }).addTo(map);
-                        }
-                    });
-                })
-                .catch(error => console.error('Error fetching locations:', error));
-        }
-    </script>
+                locations.forEach(location => {
+                    const marker = L.marker([location.latitude, location.longitude]).addTo(map)
+                        .bindPopup(`User ID: ${userId}`);
+
+                    if (location.radiusLimit) {
+                        const circle = L.circle([location.latitude, location.longitude], {
+                            radius: location.radiusLimit,
+                            color: 'red',
+                            fillColor: '#f03',
+                            fillOpacity: 0.5
+                        }).addTo(map);
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching locations:', error));
+    }
+</script>
 </body>
 </html>

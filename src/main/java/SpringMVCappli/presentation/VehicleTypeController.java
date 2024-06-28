@@ -3,11 +3,7 @@ package SpringMVCappli.presentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import SpringMVCappli.dao.entities.VehicleType;
 import SpringMVCappli.service.VehicleTypeService;
@@ -16,8 +12,12 @@ import SpringMVCappli.service.VehicleTypeService;
 @RequestMapping("/admin/vehicles")
 public class VehicleTypeController {
 
+    private final VehicleTypeService vehicleTypeService;
+
     @Autowired
-    private VehicleTypeService vehicleTypeService;
+    public VehicleTypeController(VehicleTypeService vehicleTypeService) {
+        this.vehicleTypeService = vehicleTypeService;
+    }
 
     @GetMapping
     public String getVehicleTypesPage(Model model) {

@@ -11,8 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class AdminController {
 
+    private final Userservice userService;
+
     @Autowired
-    private Userservice userService;
+    public AdminController(Userservice userService) {
+        this.userService = userService;
+    }
 
     @GetMapping
     public String getAdminPage(Model model) {

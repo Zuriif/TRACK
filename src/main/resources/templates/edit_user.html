@@ -10,26 +10,33 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div class="container-fluid">
-        <h1 class="mt-4">Edit User</h1>
-        <form action="/admin/users/edit" method="post">
-            <input type="hidden" name="id" th:value="${user.id}">
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" name="name" th:value="${user.name}" required>
-            </div>
-            <div class="form-group">
-                <label for="phoneNumber">Phone Number</label>
-                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" th:value="${user.phoneNumber}" required>
-            </div>
-            <div class="form-group">
-                <label for="vehicleTypeId">Vehicle Type</label>
-                <select class="form-control" id="vehicleTypeId" name="vehicleTypeId" required>
-                    <option th:each="vehicleType : ${vehicleTypes}" th:value="${vehicleType.id}" th:text="${vehicleType.typeName}" th:selected="${vehicleType.id == user.vehicleType.id}"></option>
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Update User</button>
-        </form>
-    </div>
+<div class="container-fluid">
+    <h1 class="mt-4">Edit User</h1>
+    <form th:action="@{/admin/users/edit}" th:object="${user}" method="post">
+        <input type="hidden" th:field="*{id}" />
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}" required>
+        </div>
+        <div class="form-group">
+            <label for="phoneNumber">Phone Number</label>
+            <input type="text" class="form-control" id="phoneNumber" th:field="*{phoneNumber}" required>
+        </div>
+        <div class="form-group">
+            <label for="status">Status</label>
+            <select class="form-control" id="status" th:field="*{status}" required>
+                <option value="En Cours" th:selected="${user.status == 'En Cours'}">En Cours</option>
+                <option value="Arrêt" th:selected="${user.status == 'Arrêt'}">Arrêt</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="vehicleTypeId">Vehicle Type</label>
+            <select class="form-control" id="vehicleTypeId" name="vehicleTypeId" required>
+                <option th:each="vehicleType : ${vehicleTypes}" th:value="${vehicleType.id}" th:text="${vehicleType.typeName}" th:selected="${vehicleType.id == user.vehicleType.id}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Update User</button>
+    </form>
+</div>
 </body>
 </html>

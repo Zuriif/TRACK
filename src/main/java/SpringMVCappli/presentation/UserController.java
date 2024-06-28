@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin/users")
 public class UserController {
 
-    @Autowired
-    private Userservice userService;
+    private final Userservice userService;
+    private final VehicleTypeService vehicleTypeService;
 
     @Autowired
-    private VehicleTypeService vehicleTypeService;
+    public UserController(Userservice userService, VehicleTypeService vehicleTypeService) {
+        this.userService = userService;
+        this.vehicleTypeService = vehicleTypeService;
+    }
 
     @GetMapping
     public String getUsersPage(Model model) {
@@ -26,16 +29,13 @@ public class UserController {
 
     @GetMapping("/add")
     public String getAddUserPage(Model model) {
+        model.addAttribute("user", new User());
         model.addAttribute("vehicleTypes", vehicleTypeService.getAllVehicleTypes());
         return "add_user";
     }
 
     @PostMapping("/add")
-    public String addUser(@RequestParam String name, @RequestParam String phoneNumber, @RequestParam String status, @RequestParam Long vehicleTypeId) {
-        User user = new User();
-        user.setName(name);
-        user.setPhoneNumber(phoneNumber);
-        user.setStatus(status);
+    public String addUser(@ModelAttribute("user") User user, @RequestParam Long vehicleTypeId) {
         user.setVehicleType(vehicleTypeService.getVehicleTypeById(vehicleTypeId));
         userService.addUser(user);
         return "redirect:/admin/users";
@@ -50,11 +50,7 @@ public class UserController {
     }
 
     @PostMapping("/edit")
-    public String editUser(@RequestParam Long id, @RequestParam String name, @RequestParam String phoneNumber, @RequestParam String status, @RequestParam Long vehicleTypeId) {
-        User user = userService.getUserById(id);
-        user.setName(name);
-        user.setPhoneNumber(phoneNumber);
-        user.setStatus(status);
+    public String editUser(@ModelAttribute User user, @RequestParam Long vehicleTypeId) {
         user.setVehicleType(vehicleTypeService.getVehicleTypeById(vehicleTypeId));
         userService.updateUser(user);
         return "redirect:/admin/users";
